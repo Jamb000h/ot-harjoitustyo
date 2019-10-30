@@ -1,0 +1,72 @@
+commit c56f07cdb1c7ecead5b71c7a2df0b61467b48cb6
+Author: Jonne Kanerva <kanerva.jonne@gmail.com>
+Date:   Wed Oct 30 16:49:16 2019 +0200
+    remove file1
+ tiedostoja/file2.txt                 | 0
+ tiedostoja/{file1.txt => file22.txt} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+commit dfc56fe3c61e463b0abd166650cd4e0fb255b2cb
+Author: Jonne Kanerva <kanerva.jonne@gmail.com>
+Date:   Wed Oct 30 16:44:25 2019 +0200
+    fileitä
+ tiedostoja/file1.txt | 0
+ tiedostoja/file2.txt | 0
+ tiedostoja/file3.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+commit efd11184269eeb62cb55ccd726b5daa41cae8480
+Author: Jonne Kanerva <kanerva.jonne@gmail.com>
+Date:   Wed Oct 30 16:39:20 2019 +0200
+    lisäyksiäpoistoja
+ eka.txt    | 5 ++++-
+ kolmas.txt | 5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+commit 15f635bb8a1bf24209463ae2ff03cb900aaa4545
+Author: Jonne Kanerva <kanerva.jonne@gmail.com>
+Date:   Wed Oct 30 16:38:10 2019 +0200
+    uudelleennimentä
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+commit 513fe1b49ae0ecfe9d4db68792e0256eb287e129
+Author: Jonne Kanerva <kanerva.jonne@gmail.com>
+Date:   Wed Oct 30 16:36:16 2019 +0200
+    poisto
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+commit 7edf6958158277e853a19497c64d7ebe6ce1fffe
+Author: Jonne Kanerva <kanerva.jonne@gmail.com>
+Date:   Wed Oct 30 16:35:12 2019 +0200
+    paljon tekstiä
+ tiedosto.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+commit ccaeaaef8d571adffd4cd73006d8e35e096acd8f
+Author: Jonne Kanerva <kanerva.jonne@gmail.com>
+Date:   Wed Oct 30 16:28:53 2019 +0200
+    stuff
+ stuff/jokin_tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+commit 0093e1f84190959b8fe8fe107ad3eac30c9371f1
+Author: Jonne Kanerva <kanerva.jonne@gmail.com>
+Date:   Wed Oct 30 16:28:28 2019 +0200
+    Muutoksia
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+commit b4b4cf8d224c66b74d2036dc86ef581758700c66
+Author: Jonne Kanerva <kanerva.jonne@gmail.com>
+Date:   Wed Oct 30 16:28:01 2019 +0200
+    kolmas
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+commit 288f30cb1d8586319d365b5ab24517a48e07b73f
+Author: Jonne Kanerva <kanerva.jonne@gmail.com>
+Date:   Wed Oct 30 16:23:45 2019 +0200
+    muutos ja lisäys
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+commit c196fcdad19b67e35e635aa506851fc68af19df7
+Author: Jonne Kanerva <kanerva.jonne@gmail.com>
+Date:   Wed Oct 30 16:22:48 2019 +0200
+    tiedosto.txt luotu
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
