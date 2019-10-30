@@ -7,8 +7,14 @@ Tämä repositorio sisältää harjoitustyön ja _laskarit_ kurssille **Ohjelmis
 
 [komentorivi.txt](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
 ### Viikko 2
+-
 ### Viikko 3
+-
 ### Viikko 4
+-
 ### Viikko 5
+-
 ### Viikko 6
+-
 ### Viikko 7
+-
