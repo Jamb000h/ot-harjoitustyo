@@ -20,25 +20,25 @@ public class MaksukorttiTest {
     
     @Test
     public void alkusaldoOikein() {
-        assertEquals(10, kortti.saldo());   
+        assertEquals("saldo: 0.10", kortti.toString());   
     }
     
     @Test
     public void saldolatausToimiiOikein() {
         kortti.lataaRahaa(5);
-        assertEquals(15, kortti.saldo());   
+        assertEquals("saldo: 0.15", kortti.toString());      
     }
     
     @Test
     public void saldoVaheneeOikein() {
         kortti.otaRahaa(5);
-        assertEquals(5, kortti.saldo());   
+        assertEquals("saldo: 0.5", kortti.toString());      
     }
     
     @Test
     public void saldoEiMuutuJosOtetaanRahaaYliSaldon() {
         kortti.otaRahaa(15);
-        assertEquals(10, kortti.saldo());   
+        assertEquals("saldo: 0.10", kortti.toString());     
     }
     
     @Test
