@@ -1,6 +1,6 @@
 package kuukausibudjetti;
 
-import kuukausibudjetti.ui.BudjettiUI;
+import kuukausibudjetti.ui.BudgetUI;
 
 /**
  *
@@ -8,6 +8,6 @@ import kuukausibudjetti.ui.BudjettiUI;
  */
 public class Main {
     public static void main(String[] args) {
-        BudjettiUI.main(args);
+        BudgetUI.main(args);
     }
 }
