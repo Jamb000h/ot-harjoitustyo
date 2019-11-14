@@ -33,6 +33,12 @@ public class SQLiteDatabase {
         } catch (SQLException e) {
             System.out.println("Either the table PERSON exists or it couldn't be created.");
         }
+        
+        try {
+            createEntryTable();
+        } catch (SQLException e) {
+            System.out.println("Either the table ENTRY exists or it couldn't be created.");
+        }
     }
     
     private void createPersonTable() throws SQLException {
@@ -40,6 +46,20 @@ public class SQLiteDatabase {
         String sql = "CREATE TABLE PERSON "
                 + "(ID             INTEGER PRIMARY KEY      NOT NULL,"
                 + " NAME           TEXT                     NOT NULL)";
+        stmt.executeUpdate(sql);
+        stmt.close();
+
+    }
+    
+    private void createEntryTable() throws SQLException {
+        Statement stmt = connection.createStatement();
+        String sql = "CREATE TABLE ENTRY "
+                + "(ID              INTEGER PRIMARY KEY     NOT NULL,"
+                + " SUM             INTEGER                 NOT NULL,"
+                + " TYPE            INTEGER                 NOT NULL,"
+                + " DESCRIPTION     TEXT                    NOT NULL,"
+                + " PERSONID        INTEGER,"
+                + " FOREIGN KEY(PERSONID) REFERENCES PERSON(ID) ON DELETE CASCADE)";
         stmt.executeUpdate(sql);
         stmt.close();
 

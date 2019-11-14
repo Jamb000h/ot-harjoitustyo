@@ -38,7 +38,6 @@ public class SQLitePersonDao implements PersonDao {
         } catch (SQLException e) {
             return false;
         }
-        
     }
 
     @Override
@@ -61,6 +60,20 @@ public class SQLitePersonDao implements PersonDao {
         }
         
         return persons;
+    }
+
+    @Override
+    public Boolean delete(long id) {
+        try {
+            Connection connection = this.db.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM PERSON WHERE ID = ?");
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+            stmt.close();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
     
 }

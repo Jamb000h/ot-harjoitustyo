@@ -14,30 +14,24 @@ import java.util.ArrayList;
 public class Person {
     private final String name;
     private final long id;
-    private ArrayList<Integer> incomes;
-    private ArrayList<Integer> expenditures;
+    private Budget budget;
     
     public Person(long id, String name) {
         this.id = id;
         this.name = name;
-        this.incomes = new ArrayList<>();
-        this.expenditures = new ArrayList<>();
+        this.budget = new Budget();
     }
     
-    public void addIncome(Integer sum) {
-        this.incomes.add(sum);
+    public long getId() {
+        return this.id;
     }
     
-    public void addExpenditure(Integer sum) {
-        this.expenditures.add(sum);
+    public String getName() {
+        return this.name;
     }
-
-    public ArrayList<Integer> getIncomes() {
-        return incomes;
-    }
-
-    public ArrayList<Integer> getExpenditures() {
-        return expenditures;
+    
+    public Budget getBudget() {
+        return this.budget;
     }
 
     @Override

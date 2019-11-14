@@ -14,5 +14,6 @@ import kuukausibudjetti.domain.Person;
  */
 public interface PersonDao {
     Boolean create(String name);
+    Boolean delete(long id);
     List<Person> getAll();
 }

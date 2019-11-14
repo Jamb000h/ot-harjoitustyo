@@ -27,4 +27,8 @@ public class PersonService {
     public List<Person> getPersons() {
         return this.personDao.getAll();
     }
+    
+    public boolean removePerson(long id) {
+        return this.personDao.delete(id);
+    }
 }
