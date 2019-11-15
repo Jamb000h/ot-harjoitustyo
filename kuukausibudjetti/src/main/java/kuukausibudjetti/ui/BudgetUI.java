@@ -112,6 +112,11 @@ public class BudgetUI extends Application {
         removePersonButton.setMinWidth(50);
         removePersonButton.setOnAction(e -> {
             this.personService.removePerson(p.getId());
+            if(this.selectedPerson.getId() == p.getId()) {
+                this.selectedPerson = null;
+                refreshEntryLists();
+                refreshBoxLabels();
+            }
             refreshPersonList();
         });
         
