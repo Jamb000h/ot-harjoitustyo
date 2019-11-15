@@ -22,7 +22,7 @@ public class SQLitePersonDaoTest {
     
     @Before
     public void setUp() throws Exception {
-        SQLiteDatabase db = new SQLiteDatabase("memory");
+        SQLiteDatabase db = new SQLiteDatabase(":memory:");
         this.dao = new SQLitePersonDao(db);
     }
     
