@@ -6,6 +6,11 @@ Tämä repositorio sisältää harjoitustyön ja _laskarit_ kurssille **Ohjelmis
 
 [Työaikakirjanpito](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
 
+## Ohjelmiston käynnistys
+Aja komento
+```mvn compile exec:java -Dexec.mainClass=pakkaus.Paaohjelma```
+kansiossa ```/kuukausibudjetti```
+
 ## Ohjelmiston testaus
 ### Testien ajaminen
 Aja komento
