@@ -142,7 +142,7 @@ public class BudgetUI extends Application {
     
     private void refreshPersonList() {
         this.personList.getChildren().clear();
-        List<Person> persons = this.personService.getPersons();
+        List<Person> persons = this.personService.refetchPersons();
         persons.forEach(person ->{
             personList.getChildren().add(createPersonListItem(person));
         });
@@ -229,6 +229,7 @@ public class BudgetUI extends Application {
             this.personService.addPerson(name);
             addPersonInput.setText("");
             refreshPersonList();
+            refreshEntryLists();
         });
         wrapper.getChildren().addAll(addPersonInput, addPersonButton);
         return wrapper;

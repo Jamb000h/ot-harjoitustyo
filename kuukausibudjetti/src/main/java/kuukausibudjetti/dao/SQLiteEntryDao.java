@@ -94,6 +94,7 @@ public class SQLiteEntryDao implements EntryDao {
     }
     
     public List<Entry> fetchAll() {
+        ArrayList<Entry> entryList = new ArrayList<>();
         try {
             Connection connection = this.db.getConnection();
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ENTRY");
@@ -109,12 +110,12 @@ public class SQLiteEntryDao implements EntryDao {
                 }
                 
                 if(type == EntryType.EXPENDITURE.getId()) {
-                    this.entries.add(new Entry(id, sum, EntryType.EXPENDITURE, desc, personId));
+                    entryList.add(new Entry(id, sum, EntryType.EXPENDITURE, desc, personId));
                     continue;
                 }
                 
                 if(type == EntryType.INCOME.getId()) {
-                    this.entries.add(new Entry(id, sum, EntryType.INCOME, desc, personId));
+                    entryList.add(new Entry(id, sum, EntryType.INCOME, desc, personId));
                     continue;
                 }
             }
@@ -122,7 +123,7 @@ public class SQLiteEntryDao implements EntryDao {
         } catch (SQLException e) {
             System.out.println("Error getting entries");
         }
-        
+        this.entries = entryList;
         return this.entries;
     }
 }

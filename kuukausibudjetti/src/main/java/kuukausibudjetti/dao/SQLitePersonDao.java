@@ -27,22 +27,7 @@ public class SQLitePersonDao implements PersonDao {
     public SQLitePersonDao(SQLiteDatabase db) {
         this.db = db;
         this.persons = new ArrayList<>();
-
-        try {
-            Connection connection = this.db.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM PERSON");
-            ResultSet resultSet = stmt.executeQuery();
-            while (resultSet.next()) {
-                long id = resultSet.getLong("ID");
-                String name = resultSet.getString("NAME");
-
-                Person p = new Person(id, name);
-                this.persons.add(p);
-            }
-            stmt.close();
-        } catch (SQLException e) {
-            System.out.println("Error getting persons");
-        }
+        fetchAll();
     }
 
     @Override
@@ -79,6 +64,28 @@ public class SQLitePersonDao implements PersonDao {
         } catch (SQLException e) {
             return false;
         }
+    }
+
+    @Override
+    public List<Person> fetchAll() {
+        ArrayList<Person> personList = new ArrayList<>();
+        try {
+            Connection connection = this.db.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM PERSON");
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getLong("ID");
+                String name = resultSet.getString("NAME");
+
+                Person p = new Person(id, name);
+                personList.add(p);
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error getting persons");
+        }
+        this.persons = personList;
+        return this.persons;
     }
     
 }

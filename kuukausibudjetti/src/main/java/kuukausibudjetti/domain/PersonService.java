@@ -34,6 +34,10 @@ public class PersonService {
         return this.personDao.getAll();
     }
     
+    public List<Person> refetchPersons() {
+        return this.personDao.fetchAll();
+    }
+    
     public boolean removePerson(long id) {
         return this.personDao.delete(id);
     }
