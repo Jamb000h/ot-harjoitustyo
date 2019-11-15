@@ -5,6 +5,7 @@
  */
 package kuukausibudjetti.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 import kuukausibudjetti.domain.Person;
 
@@ -13,7 +14,7 @@ import kuukausibudjetti.domain.Person;
  * @author Jonne
  */
 public interface PersonDao {
-    Boolean create(String name);
+    Person create(String name) throws SQLException;
     Boolean delete(long id);
     List<Person> getAll();
 }

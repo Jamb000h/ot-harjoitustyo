@@ -5,6 +5,7 @@
  */
 package kuukausibudjetti.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 import kuukausibudjetti.domain.Entry;
 import kuukausibudjetti.domain.EntryType;
@@ -15,11 +16,9 @@ import kuukausibudjetti.domain.Person;
  * @author Jonne
  */
 public interface EntryDao {
-    Boolean create(Integer sum, EntryType type, String desc);
-    Boolean createForPerson(Integer sum, EntryType type, String desc, Person p);
+    Entry create(Integer sum, EntryType type, String desc) throws SQLException;
+    Entry createForPerson(Integer sum, EntryType type, String desc, Person p) throws SQLException;
     Boolean delete(long id);
     List<Entry> getAll();
-    List<Entry> getAllForPerson(Person p);
-    List<Entry> getAllExpenditures();
-    List<Entry> getAllIncomes();
+    List<Entry> fetchAll();
 }

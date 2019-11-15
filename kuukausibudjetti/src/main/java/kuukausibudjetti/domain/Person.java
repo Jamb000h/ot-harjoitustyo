@@ -14,12 +14,10 @@ import java.util.ArrayList;
 public class Person {
     private final String name;
     private final long id;
-    private Budget budget;
     
     public Person(long id, String name) {
         this.id = id;
         this.name = name;
-        this.budget = new Budget();
     }
     
     public long getId() {
@@ -28,10 +26,6 @@ public class Person {
     
     public String getName() {
         return this.name;
-    }
-    
-    public Budget getBudget() {
-        return this.budget;
     }
 
     @Override

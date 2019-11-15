@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import kuukausibudjetti.db.SQLiteDatabase;
@@ -23,41 +24,52 @@ import kuukausibudjetti.domain.Person;
 public class SQLiteEntryDao implements EntryDao {
     
     private final SQLiteDatabase db;
+    private List<Entry> entries;
     
     public SQLiteEntryDao(SQLiteDatabase db) {
         this.db = db;
+        this.entries = new ArrayList<>();
+        fetchAll();
     }
 
     @Override
-    public Boolean create(Integer sum, EntryType type, String desc) {
+    public Entry create(Integer sum, EntryType type, String desc) throws SQLException {
         try {
             Connection connection = this.db.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO ENTRY (SUM, TYPE, DESCRIPTION) VALUES (?, ?, ?);");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO ENTRY (SUM, TYPE, DESCRIPTION) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, sum);
             stmt.setInt(2, type.getId());
             stmt.setString(3, desc);
-            stmt.executeUpdate();
+            long id = stmt.executeUpdate();
             stmt.close();
-            return true;
+            Entry e = new Entry(id, sum, type, desc);
+            this.entries.add(e);
+            return e;
         } catch (SQLException e) {
-            return false;
+            throw(e);
         }
     }
 
     @Override
-    public Boolean createForPerson(Integer sum, EntryType type, String desc, Person p) {
+    public Entry createForPerson(Integer sum, EntryType type, String desc, Person p) throws SQLException {
         try {
             Connection connection = this.db.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO ENTRY (SUM, TYPE, DESCRIPTION, PERSONID) VALUES (?, ?, ?, ?);");
+            PreparedStatement stmt = 
+                    connection.prepareStatement(
+                            "INSERT INTO ENTRY (SUM, TYPE, DESCRIPTION, PERSONID) VALUES (?, ?, ?, ?);", 
+                            Statement.RETURN_GENERATED_KEYS
+            );
             stmt.setInt(1, sum);
             stmt.setInt(2, type.getId());
             stmt.setString(3, desc);
             stmt.setLong(4, p.getId());
-            stmt.executeUpdate();
+            long id = stmt.executeUpdate();
             stmt.close();
-            return true;
+            Entry e = new Entry(id, sum, type, desc, p.getId());
+            this.entries.add(e);
+            return e;
         } catch (SQLException e) {
-            return false;
+            throw(e);
         }
     }
 
@@ -69,6 +81,7 @@ public class SQLiteEntryDao implements EntryDao {
             stmt.setLong(1, id);
             stmt.executeUpdate();
             stmt.close();
+            this.entries.removeIf(entry -> entry.getId() == id);
             return true;
         } catch (SQLException e) {
             return false;
@@ -77,7 +90,10 @@ public class SQLiteEntryDao implements EntryDao {
 
     @Override
     public List<Entry> getAll() {
-        ArrayList<Entry> entries = new ArrayList<>();
+        return this.entries;
+    }
+    
+    public List<Entry> fetchAll() {
         try {
             Connection connection = this.db.getConnection();
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ENTRY");
@@ -87,14 +103,18 @@ public class SQLiteEntryDao implements EntryDao {
                 Integer sum = resultSet.getInt("SUM");
                 Integer type = resultSet.getInt("TYPE");
                 String desc = resultSet.getString("DESCRIPTION");
+                long personId = -1;
+                if(resultSet.getLong("PERSONID") != 0) {
+                    personId = resultSet.getLong("PERSONID");
+                }
                 
                 if(type == EntryType.EXPENDITURE.getId()) {
-                    entries.add(new Entry(id, sum, EntryType.EXPENDITURE, desc));
+                    this.entries.add(new Entry(id, sum, EntryType.EXPENDITURE, desc, personId));
                     continue;
                 }
                 
                 if(type == EntryType.INCOME.getId()) {
-                    entries.add(new Entry(id, sum, EntryType.INCOME, desc));
+                    this.entries.add(new Entry(id, sum, EntryType.INCOME, desc, personId));
                     continue;
                 }
             }
@@ -103,49 +123,6 @@ public class SQLiteEntryDao implements EntryDao {
             System.out.println("Error getting entries");
         }
         
-        return entries;
+        return this.entries;
     }
-    
-    @Override
-    public List<Entry> getAllForPerson(Person p) {
-        ArrayList<Entry> entries = new ArrayList<>();
-        try {
-            Connection connection = this.db.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ENTRY WHERE PERSONID = ?");
-            stmt.setLong(1, p.getId());
-            ResultSet resultSet = stmt.executeQuery();
-            while (resultSet.next()) {
-                long id = resultSet.getLong("ID");
-                Integer sum = resultSet.getInt("SUM");
-                Integer type = resultSet.getInt("TYPE");
-                String desc = resultSet.getString("DESCRIPTION");
-                
-                if(type == EntryType.EXPENDITURE.getId()) {
-                    entries.add(new Entry(id, sum, EntryType.EXPENDITURE, desc));
-                    continue;
-                }
-                
-                if(type == EntryType.INCOME.getId()) {
-                    entries.add(new Entry(id, sum, EntryType.INCOME, desc));
-                    continue;
-                }
-            }
-            stmt.close();
-        } catch (SQLException e) {
-            System.out.println("Error getting entries");
-        }
-        
-        return entries;
-    }
-    
-    @Override
-    public List<Entry> getAllExpenditures() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Entry> getAllIncomes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

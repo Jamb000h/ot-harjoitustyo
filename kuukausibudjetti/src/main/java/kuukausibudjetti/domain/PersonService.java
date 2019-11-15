@@ -1,5 +1,6 @@
 package kuukausibudjetti.domain;
 
+import java.sql.SQLException;
 import java.util.List;
 import kuukausibudjetti.dao.PersonDao;
 
@@ -21,7 +22,12 @@ public class PersonService {
     }
     
     public boolean addPerson(String name) {
-        return this.personDao.create(name);
+        try {
+            Person newPerson = this.personDao.create(name);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
     
     public List<Person> getPersons() {

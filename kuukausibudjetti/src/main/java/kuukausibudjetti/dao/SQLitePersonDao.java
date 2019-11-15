@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import kuukausibudjetti.db.SQLiteDatabase;
@@ -21,28 +22,12 @@ import kuukausibudjetti.domain.Person;
 public class SQLitePersonDao implements PersonDao {
     
     private final SQLiteDatabase db;
+    private List<Person> persons;
     
     public SQLitePersonDao(SQLiteDatabase db) {
         this.db = db;
-    }
+        this.persons = new ArrayList<>();
 
-    @Override
-    public Boolean create(String name) {
-        try {
-            Connection connection = this.db.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO PERSON (NAME) VALUES (?);");
-            stmt.setString(1, name);
-            stmt.executeUpdate();
-            stmt.close();
-            return true;
-        } catch (SQLException e) {
-            return false;
-        }
-    }
-
-    @Override
-    public List<Person> getAll() {
-        ArrayList<Person> persons = new ArrayList<>();
         try {
             Connection connection = this.db.getConnection();
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM PERSON");
@@ -52,14 +37,33 @@ public class SQLitePersonDao implements PersonDao {
                 String name = resultSet.getString("NAME");
 
                 Person p = new Person(id, name);
-                persons.add(p);
+                this.persons.add(p);
             }
             stmt.close();
         } catch (SQLException e) {
             System.out.println("Error getting persons");
         }
-        
-        return persons;
+    }
+
+    @Override
+    public Person create(String name) throws SQLException {
+        try {
+            Connection connection = this.db.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO PERSON (NAME) VALUES (?);", Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, name);
+            long id = stmt.executeUpdate();
+            stmt.close();
+            Person p = new Person(id, name);
+            this.persons.add(p);
+            return p;
+        } catch (SQLException e) {
+            throw(e);
+        }
+    }
+
+    @Override
+    public List<Person> getAll() {
+        return this.persons;
     }
 
     @Override
@@ -70,6 +74,7 @@ public class SQLitePersonDao implements PersonDao {
             stmt.setLong(1, id);
             stmt.executeUpdate();
             stmt.close();
+            this.persons.removeIf(person -> person.getId() == id);
             return true;
         } catch (SQLException e) {
             return false;
