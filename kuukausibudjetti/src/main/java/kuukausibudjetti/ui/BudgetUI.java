@@ -33,6 +33,7 @@ import kuukausibudjetti.dao.PersonDao;
 import kuukausibudjetti.dao.SQLiteEntryDao;
 import kuukausibudjetti.dao.SQLitePersonDao;
 import kuukausibudjetti.db.SQLiteDatabase;
+import kuukausibudjetti.domain.Entry;
 import kuukausibudjetti.domain.EntryService;
 import kuukausibudjetti.domain.EntryType;
 import kuukausibudjetti.domain.Person;
@@ -48,7 +49,11 @@ public class BudgetUI extends Application {
     private EntryService entryService;
     private VBox personList;
     private VBox incomeList;
+    private VBox expenditureList;
     private Person selectedPerson;
+    private Label incomeBoxLabel;
+    private Label expenditureBoxLabel;
+    private Label entryBoxLabel;
  
     public static void main(String[] args) {
         launch(args);
@@ -66,12 +71,17 @@ public class BudgetUI extends Application {
         PersonDao personDao = new SQLitePersonDao(db);
         this.personService = new PersonService(personDao);
         this.selectedPerson = null;
-        createPersonList();
-        refreshPersonList();
         
         EntryDao entryDao = new SQLiteEntryDao(db);
         this.entryService = new EntryService(entryDao);
         
+        this.entryBoxLabel = new Label("YHTEISET");
+        this.expenditureBoxLabel = new Label("MENOT");
+        this.incomeBoxLabel = new Label("TULOT");
+        
+        setStyles();
+        createLists();
+        refreshPersonList();
     }
     
     private Node createPersonListItem(Person p) {
@@ -80,16 +90,14 @@ public class BudgetUI extends Application {
         box.setMinWidth(250);
         box.setAlignment(Pos.CENTER_LEFT);
         
-        Region rowSpacer = new Region();
-        rowSpacer.setMinSize(1, 10);
-        HBox.setHgrow(rowSpacer, Priority.ALWAYS);
-        
         Label personNameLabel = new Label(p.getName());
         personNameLabel.setPadding(new Insets(5));
         personNameLabel.setMinWidth(170);
         personNameLabel.setCursor(Cursor.HAND);
         personNameLabel.setOnMouseClicked(e -> {
             this.selectedPerson = p;
+            refreshEntryLists();
+            refreshBoxLabels();
         });
         
         personNameLabel.setOnMouseEntered(e -> {
@@ -114,11 +122,17 @@ public class BudgetUI extends Application {
         return box;
     }
     
-    private void createPersonList() {
-        VBox list = new VBox(10);
-        list.setPadding(new Insets(10)); 
-
-        this.personList = list;
+    private void refreshBoxLabels() {
+        if(this.selectedPerson == null) {
+            this.incomeBoxLabel.setText("TULOT");
+            this.expenditureBoxLabel.setText("MENOT");
+            this.entryBoxLabel.setText("YHTEISET");
+            return;
+        }
+        
+            this.incomeBoxLabel.setText("TULOT - " + this.selectedPerson.getName());
+            this.expenditureBoxLabel.setText("MENOT - " + this.selectedPerson.getName());
+            this.entryBoxLabel.setText(this.selectedPerson.getName());
     }
     
     private void refreshPersonList() {
@@ -129,18 +143,78 @@ public class BudgetUI extends Application {
         });
         this.selectedPerson = null;
     }
+    
+    private Node createEntryListItem(Entry e) {
+        HBox listItem = createListItem();
+        Label entryLabel = createListItemLabel(e.getDesc() + e.getSum().toString());
 
-    @Override
-    public void start(Stage primaryStage) {
-        Pane wrapper = new Pane();
+        Button removeEntryButton = new Button("poista");
+        removeEntryButton.setMinWidth(50);
+        removeEntryButton.setOnAction(event -> {
+            this.entryService.removeEntry(e.getId());
+            refreshEntryLists();
+        });
+
+        listItem.getChildren().addAll(entryLabel, removeEntryButton);
+        return listItem;
+    }
+    
+    private VBox createListWrapper() {
+        VBox wrapper = new VBox();
+        wrapper.setPadding(new Insets(10));
+        wrapper.setAlignment(Pos.CENTER_LEFT);
+        return wrapper;
+    }
+    
+    private void createLists() {
+        this.incomeList = createListWrapper();
+        this.expenditureList = createListWrapper();
+        this.personList = createListWrapper();
+    }
+    
+    private void setStyles() {
+        Region colSpacer = new Region();
+        colSpacer.setMinSize(1, 10);
+        HBox.setHgrow(colSpacer, Priority.ALWAYS);
         
-        VBox personBox = new VBox();
-        personBox.setAlignment(Pos.CENTER);
-        personBox.setPadding(new Insets(10)); 
-        ScrollPane personListPane = new ScrollPane();
-        personListPane.setContent(this.personList);
-        Label personBoxLabel = new Label("HENKILÖT");
-
+        Region rowSpacer = new Region();
+        rowSpacer.setMinSize(1, 10);
+        VBox.setVgrow(rowSpacer, Priority.ALWAYS);
+    }
+    
+    private HBox createListItem() {
+        HBox listItem = new HBox(10);
+        listItem.setMaxWidth(450);
+        listItem.setMinWidth(450);
+        listItem.setAlignment(Pos.CENTER_LEFT);
+        return listItem;
+    }
+    
+    private Label createListItemLabel(String labelText) {
+        Label label = new Label(labelText);
+        label.setPadding(new Insets(5));
+        label.setMinWidth(150);
+        return label;
+    }
+    
+    private void refreshEntryLists() {
+        this.incomeList.getChildren().clear();
+        this.expenditureList.getChildren().clear();
+        if (this.selectedPerson == null) {
+            return;
+        }
+        List<Entry> entries = this.entryService.getAllEntriesForPerson(this.selectedPerson);
+        entries.forEach(entry ->{
+            if(entry.getType() == EntryType.INCOME) {
+                this.incomeList.getChildren().add(createEntryListItem(entry));
+            } else {
+                this.expenditureList.getChildren().add(createEntryListItem(entry));
+            }
+        });
+    }
+    
+    private HBox createAddPersonInput() {
+        HBox wrapper = new HBox();
         TextField addPersonInput = new TextField();
         
         Button addPersonButton = new Button("Lisää henkilö");
@@ -148,12 +222,20 @@ public class BudgetUI extends Application {
         addPersonButton.setOnAction(e -> {
             String name = addPersonInput.getText();
             this.personService.addPerson(name);
+            addPersonInput.setText("");
             refreshPersonList();
         });
-        
+        wrapper.getChildren().addAll(addPersonInput, addPersonButton);
+        return wrapper;
+    }
+    
+    private HBox createAddEntryInput(EntryType entryType) {
+        HBox wrapper = new HBox();
+        Label sumLabel = new Label("Summa");
+        Label descLabel = new Label("Selite");
         TextField addEntrySum = new TextField();
         TextField addEntryDesc = new TextField();
-        Button addEntryButton = new Button("Lisää tulo");
+        Button addEntryButton = new Button("Lisää");
 
         addEntryButton.setPadding(new Insets(10));
         addEntryButton.setOnAction(e -> {
@@ -163,18 +245,44 @@ public class BudgetUI extends Application {
             } catch (Exception ex) {
                 return;
             }
-            this.entryService.addEntry(sum, EntryType.INCOME, addEntryDesc.getText());
+            this.entryService.addEntryForPerson(sum, entryType, addEntryDesc.getText(), this.selectedPerson);
+            addEntrySum.setText("");
+            addEntryDesc.setText("");
+            refreshEntryLists();
         });
-                
-        personBox.getChildren().addAll(personBoxLabel, personListPane, addPersonInput, addPersonButton);
+        wrapper.getChildren().addAll(sumLabel, addEntrySum, descLabel, addEntryDesc, addEntryButton);
+        return wrapper;
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        VBox personBox = new VBox();
+        personBox.setAlignment(Pos.CENTER);
+        personBox.setPadding(new Insets(10)); 
+        ScrollPane personListPane = new ScrollPane();
+        personListPane.setContent(this.personList);
+        Label personBoxLabel = new Label("HENKILÖT");
+        HBox addPersonInput = createAddPersonInput();        
+        personBox.getChildren().addAll(personBoxLabel, personListPane, addPersonInput);
         
-        VBox incomeBox = new VBox();
-        incomeBox.setAlignment(Pos.CENTER_LEFT);
-        incomeBox.setPadding(new Insets(10)); 
+        VBox incomeBox = createListWrapper();
         ScrollPane incomePane = new ScrollPane();
         incomePane.setContent(this.incomeList);
+        HBox addIncomeInput = createAddEntryInput(EntryType.INCOME);
+        incomeBox.getChildren().addAll(this.incomeBoxLabel, incomePane, addIncomeInput);
         
-        wrapper.getChildren().addAll(personBox);
+        VBox expenditureBox = createListWrapper();
+        ScrollPane expenditurePane = new ScrollPane();
+        expenditurePane.setContent(this.expenditureList);
+        HBox addExpenditureInput = createAddEntryInput(EntryType.EXPENDITURE);
+        expenditureBox.getChildren().addAll(this.expenditureBoxLabel, expenditurePane, addExpenditureInput);
+        
+        VBox entryListWrapper = new VBox();
+        entryListWrapper.getChildren().addAll(this.entryBoxLabel, incomeBox, expenditureBox);
+        
+        HBox wrapper = new HBox();
+        wrapper.getChildren().addAll(personBox, entryListWrapper);
+        
         Scene budgetScene = new Scene(wrapper, 800, 600);
         primaryStage.setScene(budgetScene);
         primaryStage.show();

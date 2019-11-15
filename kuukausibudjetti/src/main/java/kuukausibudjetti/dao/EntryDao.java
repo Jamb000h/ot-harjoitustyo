@@ -19,6 +19,7 @@ public interface EntryDao {
     Boolean createForPerson(Integer sum, EntryType type, String desc, Person p);
     Boolean delete(long id);
     List<Entry> getAll();
+    List<Entry> getAllForPerson(Person p);
     List<Entry> getAllExpenditures();
     List<Entry> getAllIncomes();
 }

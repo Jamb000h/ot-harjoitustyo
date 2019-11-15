@@ -5,6 +5,7 @@
  */
 package kuukausibudjetti.domain;
 
+import java.util.List;
 import kuukausibudjetti.dao.EntryDao;
 
 /**
@@ -20,5 +21,17 @@ public class EntryService {
     
     public boolean addEntry(Integer sum, EntryType type, String desc) {
         return this.entryDao.create(sum, type, desc);
+    }
+    
+    public boolean addEntryForPerson(Integer sum, EntryType type, String desc, Person p) {
+        return this.entryDao.createForPerson(sum, type, desc, p);
+    }
+    
+    public List<Entry> getAllEntriesForPerson(Person p) {
+        return this.entryDao.getAllForPerson(p);
+    }
+    
+    public boolean removeEntry(long id) {
+        return this.entryDao.delete(id);
     }
 }

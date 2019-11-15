@@ -21,9 +21,13 @@ public class Entry {
         this.type = type;
         this.desc = desc;
     }
+    
+    public long getId() {
+        return this.id;
+    }
 
     public Integer getSum() {
-        return sum;
+        return this.sum;
     }
     
     public EntryType getType() {

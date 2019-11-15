@@ -63,7 +63,16 @@ public class SQLiteEntryDao implements EntryDao {
 
     @Override
     public Boolean delete(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Connection connection = this.db.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM ENTRY WHERE ID = ?");
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+            stmt.close();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     @Override
@@ -91,7 +100,39 @@ public class SQLiteEntryDao implements EntryDao {
             }
             stmt.close();
         } catch (SQLException e) {
-            System.out.println("Error getting persons");
+            System.out.println("Error getting entries");
+        }
+        
+        return entries;
+    }
+    
+    @Override
+    public List<Entry> getAllForPerson(Person p) {
+        ArrayList<Entry> entries = new ArrayList<>();
+        try {
+            Connection connection = this.db.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ENTRY WHERE PERSONID = ?");
+            stmt.setLong(1, p.getId());
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getLong("ID");
+                Integer sum = resultSet.getInt("SUM");
+                Integer type = resultSet.getInt("TYPE");
+                String desc = resultSet.getString("DESCRIPTION");
+                
+                if(type == EntryType.EXPENDITURE.getId()) {
+                    entries.add(new Entry(id, sum, EntryType.EXPENDITURE, desc));
+                    continue;
+                }
+                
+                if(type == EntryType.INCOME.getId()) {
+                    entries.add(new Entry(id, sum, EntryType.INCOME, desc));
+                    continue;
+                }
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error getting entries");
         }
         
         return entries;
