@@ -8,7 +8,7 @@ Tämä repositorio sisältää harjoitustyön ja _laskarit_ kurssille **Ohjelmis
 
 ## Ohjelmiston käynnistys
 Aja komento
-```mvn compile exec:java -Dexec.mainClass=pakkaus.Paaohjelma```
+```mvn compile exec:java -Dexec.mainClass=kuukausibudjetti.ui.BudgetUI```
 kansiossa ```/kuukausibudjetti```
 
 ## Ohjelmiston testaus

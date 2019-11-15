@@ -4,4 +4,4 @@
 /laskarit/viikko2/Unicafe/nbproject/
 kuukausibudjetti/target
 kuukausibudjetti/memory
-*/.db
+*/*.db
