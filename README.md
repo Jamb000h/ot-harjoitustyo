@@ -4,6 +4,11 @@ Tämä repositorio sisältää harjoitustyön ja _laskarit_ kurssille **Ohjelmis
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
+[Arkkitehtuurikuvaus](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+
+## Käyttöliittymäluonnos
+![Käyttöliittymäluonnos](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/kayttoliittymaluonnos.jpg "Käyttöliittymäluonnos")
+
 [Työaikakirjanpito](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
 
 ## Ohjelmiston käynnistys
