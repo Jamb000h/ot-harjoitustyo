@@ -17,5 +17,5 @@ public interface PersonDao {
     Person create(String name) throws SQLException;
     Boolean delete(long id);
     List<Person> getAll();
-    List<Person> fetchAll();
+    List<Person> fetchAll() throws SQLException;
 }

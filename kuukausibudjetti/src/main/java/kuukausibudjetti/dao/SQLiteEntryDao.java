@@ -29,7 +29,11 @@ public class SQLiteEntryDao implements EntryDao {
     public SQLiteEntryDao(SQLiteDatabase db) {
         this.db = db;
         this.entries = new ArrayList<>();
-        fetchAll();
+        try {
+            fetchAll();
+        } catch (SQLException e) {
+            System.out.println("Error getting entries!");
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package kuukausibudjetti.domain;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import kuukausibudjetti.dao.PersonDao;
 
@@ -35,7 +36,15 @@ public class PersonService {
     }
     
     public List<Person> refetchPersons() {
-        return this.personDao.fetchAll();
+        List<Person> persons;
+        try {
+            persons = this.personDao.fetchAll();
+        } catch (SQLException e) {
+            System.out.println("Error getting persons!");
+            persons = new ArrayList<>();
+        }
+        
+        return persons;
     }
     
     public boolean removePerson(long id) {
