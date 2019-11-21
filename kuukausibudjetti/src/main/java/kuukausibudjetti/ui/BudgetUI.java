@@ -6,6 +6,7 @@
 package kuukausibudjetti.ui;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javafx.application.Application;
@@ -82,6 +83,7 @@ public class BudgetUI extends Application {
         setStyles();
         createLists();
         refreshPersonList();
+        refreshEntryLists();
     }
     
     private Node createPersonListItem(Person p) {
@@ -127,6 +129,37 @@ public class BudgetUI extends Application {
         return box;
     }
     
+    private Node createCommonListItem() {
+        HBox box = new HBox(10);
+        box.setMaxWidth(250);
+        box.setMinWidth(250);
+        box.setAlignment(Pos.CENTER_LEFT);
+        
+        Label label = new Label("Yhteiset");
+        label.setPadding(new Insets(5));
+        label.setMinWidth(170);
+        label.setCursor(Cursor.HAND);
+        label.setOnMouseClicked(e -> {
+            this.selectedPerson = null;
+            refreshEntryLists();
+            refreshBoxLabels();
+        });
+        
+        label.setOnMouseEntered(e -> {
+            label.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        });
+        
+        label.setOnMouseExited(e -> {
+            label.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+        });
+        
+        Pane columnSpacer = new Pane();
+        columnSpacer.setMinSize(10, 1);
+        columnSpacer.setMaxSize(10, 1);
+        box.getChildren().addAll(label);
+        return box;
+    }
+    
     private void refreshBoxLabels() {
         if(this.selectedPerson == null) {
             this.incomeBoxLabel.setText("TULOT");
@@ -142,6 +175,7 @@ public class BudgetUI extends Application {
     
     private void refreshPersonList() {
         this.personList.getChildren().clear();
+        personList.getChildren().add(createCommonListItem());
         List<Person> persons = this.personService.refetchPersons();
         persons.forEach(person ->{
             personList.getChildren().add(createPersonListItem(person));
@@ -205,10 +239,12 @@ public class BudgetUI extends Application {
     private void refreshEntryLists() {
         this.incomeList.getChildren().clear();
         this.expenditureList.getChildren().clear();
+        List<Entry> entries = new ArrayList<>();
         if (this.selectedPerson == null) {
-            return;
+            entries = this.entryService.getAllCommonEntries(); 
+        } else {
+            entries = this.entryService.getAllEntriesForPerson(this.selectedPerson);
         }
-        List<Entry> entries = this.entryService.getAllEntriesForPerson(this.selectedPerson);
         entries.forEach(entry ->{
             if(entry.getType() == EntryType.INCOME) {
                 this.incomeList.getChildren().add(createEntryListItem(entry));
@@ -251,7 +287,11 @@ public class BudgetUI extends Application {
             } catch (Exception ex) {
                 return;
             }
-            this.entryService.addEntryForPerson(sum, entryType, addEntryDesc.getText(), this.selectedPerson);
+            if (this.selectedPerson == null) {
+                this.entryService.addEntry(sum, entryType, addEntryDesc.getText());
+            } else {
+                this.entryService.addEntryForPerson(sum, entryType, addEntryDesc.getText(), this.selectedPerson);
+            }
             addEntrySum.setText("");
             addEntryDesc.setText("");
             refreshEntryLists();

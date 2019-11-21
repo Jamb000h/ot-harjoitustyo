@@ -40,9 +40,13 @@ public class EntryService {
         }
     }
     
+    public List<Entry> getAllCommonEntries() {
+        return this.entryDao.getAll()
+                .stream().filter(entry -> entry.getPersonId() == -1)
+                .collect(Collectors.toList());
+    }
+    
     public List<Entry> getAllEntriesForPerson(Person p) {
-        System.out.println(this.entryDao.getAll().size());
-        this.entryDao.getAll().forEach(e -> System.out.println(e.getPersonId()));
         return this.entryDao.getAll()
                 .stream().filter(entry -> entry.getPersonId() == p.getId())
                 .collect(Collectors.toList());
