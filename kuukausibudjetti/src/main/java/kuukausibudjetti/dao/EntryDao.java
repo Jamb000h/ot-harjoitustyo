@@ -20,5 +20,5 @@ public interface EntryDao {
     Entry createForPerson(Integer sum, EntryType type, String desc, Person p) throws SQLException;
     Boolean delete(long id);
     List<Entry> getAll();
-    List<Entry> fetchAll();
+    List<Entry> fetchAll() throws SQLException;
 }

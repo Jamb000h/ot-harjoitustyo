@@ -52,25 +52,21 @@ public class SQLiteEntryDao implements EntryDao {
 
     @Override
     public Entry createForPerson(Integer sum, EntryType type, String desc, Person p) throws SQLException {
-        try {
-            Connection connection = this.db.getConnection();
-            PreparedStatement stmt = 
-                    connection.prepareStatement(
-                            "INSERT INTO ENTRY (SUM, TYPE, DESCRIPTION, PERSONID) VALUES (?, ?, ?, ?);", 
-                            Statement.RETURN_GENERATED_KEYS
-            );
-            stmt.setInt(1, sum);
-            stmt.setInt(2, type.getId());
-            stmt.setString(3, desc);
-            stmt.setLong(4, p.getId());
-            long id = stmt.executeUpdate();
-            stmt.close();
-            Entry e = new Entry(id, sum, type, desc, p.getId());
-            this.entries.add(e);
-            return e;
-        } catch (SQLException e) {
-            throw(e);
-        }
+        Connection connection = this.db.getConnection();
+        PreparedStatement stmt = 
+                connection.prepareStatement(
+                        "INSERT INTO ENTRY (SUM, TYPE, DESCRIPTION, PERSONID) VALUES (?, ?, ?, ?);", 
+                        Statement.RETURN_GENERATED_KEYS
+        );
+        stmt.setInt(1, sum);
+        stmt.setInt(2, type.getId());
+        stmt.setString(3, desc);
+        stmt.setLong(4, p.getId());
+        long id = stmt.executeUpdate();
+        stmt.close();
+        Entry e = new Entry(id, sum, type, desc, p.getId());
+        this.entries.add(e);
+        return e;
     }
 
     @Override
@@ -93,37 +89,34 @@ public class SQLiteEntryDao implements EntryDao {
         return this.entries;
     }
     
-    public List<Entry> fetchAll() {
+    public List<Entry> fetchAll() throws SQLException {
         ArrayList<Entry> entryList = new ArrayList<>();
-        try {
-            Connection connection = this.db.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ENTRY");
-            ResultSet resultSet = stmt.executeQuery();
-            while (resultSet.next()) {
-                long id = resultSet.getLong("ID");
-                Integer sum = resultSet.getInt("SUM");
-                Integer type = resultSet.getInt("TYPE");
-                String desc = resultSet.getString("DESCRIPTION");
-                long personId = -1;
-                if(resultSet.getLong("PERSONID") != 0) {
-                    personId = resultSet.getLong("PERSONID");
-                }
-                
-                if(type == EntryType.EXPENDITURE.getId()) {
-                    entryList.add(new Entry(id, sum, EntryType.EXPENDITURE, desc, personId));
-                    continue;
-                }
-                
-                if(type == EntryType.INCOME.getId()) {
-                    entryList.add(new Entry(id, sum, EntryType.INCOME, desc, personId));
-                    continue;
-                }
+        Connection connection = this.db.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ENTRY");
+        ResultSet resultSet = stmt.executeQuery();
+        
+        while (resultSet.next()) {
+            long id = resultSet.getLong("ID");
+            Integer sum = resultSet.getInt("SUM");
+            EntryType type = getEntryTypeById(resultSet.getInt("TYPE"));
+            String desc = resultSet.getString("DESCRIPTION");
+            long personId = -1;
+            if (resultSet.getLong("PERSONID") != 0) {
+                personId = resultSet.getLong("PERSONID");
             }
-            stmt.close();
-        } catch (SQLException e) {
-            System.out.println("Error getting entries");
+            entryList.add(new Entry(id, sum, type, desc, personId));
         }
+        
+        stmt.close();
         this.entries = entryList;
         return this.entries;
+    }
+    
+    private EntryType getEntryTypeById(int typeId) {
+        if (typeId == EntryType.EXPENDITURE.getId()) {
+            return EntryType.EXPENDITURE;
+        }
+        
+        return EntryType.INCOME;
     }
 }

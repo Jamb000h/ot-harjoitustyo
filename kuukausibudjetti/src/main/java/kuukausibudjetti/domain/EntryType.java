@@ -14,11 +14,11 @@ public enum EntryType {
 
     private final int id;
 
-    EntryType(int id){
-      this.id = id;
+    EntryType(int id) {
+        this.id = id;
     }
 
-    public int getId(){
-      return this.id;
+    public int getId() {
+        return this.id;
     }
 }
