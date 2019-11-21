@@ -15,4 +15,7 @@
 | 16.11 | 2    | UI:n hiominen käyttökelpoiseksi |
 |  | 1    | DAO-luokkien refaktorointi |
 |  | 1    | Ensimmäiset testit |
-| yht   | 15   | | 
+| 21.11 | 2    | Yhteiset menot ja kulut |
+|  | 0.5    | Lisää testejä |
+|  | 1    | Checkstyle + korjaukset |
+| yht   | 18.5   | | 
