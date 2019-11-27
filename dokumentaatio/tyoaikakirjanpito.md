@@ -22,4 +22,5 @@
 |  | 2    | Layout-parannuksia |
 |  | 1    | Lisää testejä |
 |  | 1    | Dokumentaatio, paketointi, release |
-| yht   | 23.5   | | 
+|  | 0.5    | sekvenssikaavio |
+| yht   | 24   | | 
