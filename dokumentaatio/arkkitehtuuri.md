@@ -1,1 +1,2 @@
 ![Pakkauskaavio](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/pakkauskaavio.png "Pakkauskaavio")
+![Sekvenssikaavio](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/sekvenssikaavio.png "Sekvenssikaavio")

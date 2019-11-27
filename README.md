@@ -8,6 +8,9 @@ Tämä repositorio sisältää harjoitustyön ja _laskarit_ kurssille **Ohjelmis
 
 [Työaikakirjanpito](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
 
+## Releaset
+[Viikko 5](https://github.com/Jamb000h/ot-harjoitustyo/releases/tag/viikko5)
+
 ## Ohjelmiston käynnistys
 Aja komento
 ```mvn compile exec:java -Dexec.mainClass=kuukausibudjetti.ui.BudgetUI```
@@ -21,6 +24,18 @@ kansiossa ```/kuukausibudjetti```
 ### Testikattavuusraportti
 Aja komento
 ```mvn jacoco:report```
+kansiossa ```/kuukausibudjetti```
+
+## Muut komennot
+### Suorituskelpoisen jar-tiedoston generointi
+Aja komento
+```mvn package```
+kansiossa ```/kuukausibudjetti```
+Tämän jälkeen jar-tiedoston voi suorittaa komennolla
+``` java -jar target/kuukausibudjetti-1.0-SNAPSHOT.jar```
+### Koodin laadullinen raportti
+Aja komento
+```mvn jxr:jxr checkstyle:checkstyle```
 kansiossa ```/kuukausibudjetti```
 
 

@@ -18,4 +18,8 @@
 | 21.11 | 2    | Yhteiset menot ja kulut |
 |  | 0.5    | Lisää testejä |
 |  | 1    | Checkstyle + korjaukset |
-| yht   | 18.5   | | 
+| 27.11 | 1    | Budjetin tulojen ja menojen laskenta ja esitys |
+|  | 2    | Layout-parannuksia |
+|  | 1    | Lisää testejä |
+|  | 1    | Dokumentaatio, paketointi, release |
+| yht   | 23.5   | | 
