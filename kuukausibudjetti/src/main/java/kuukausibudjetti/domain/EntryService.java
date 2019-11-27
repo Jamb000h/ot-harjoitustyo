@@ -64,18 +64,6 @@ public class EntryService {
                 .collect(Collectors.toList());
     }
     
-    public List<Entry> getAllIncomesForPerson(Person p) {
-        return this.entryDao.getAll()
-                .stream().filter(entry -> entry.getPersonId() == p.getId() && entry.getType() == EntryType.INCOME)
-                .collect(Collectors.toList());
-    }
-    
-    public List<Entry> getAllExpendituresForPerson(Person p) {
-        return this.entryDao.getAll()
-                .stream().filter(entry -> entry.getPersonId() == p.getId() && entry.getType() == EntryType.EXPENDITURE)
-                .collect(Collectors.toList());
-    }
-    
     public boolean removeEntry(long id) {
         return this.entryDao.delete(id);
     }
