@@ -44,9 +44,11 @@ public class SQLiteEntryDao implements EntryDao {
             stmt.setInt(1, sum);
             stmt.setInt(2, type.getId());
             stmt.setString(3, desc);
-            long id = stmt.executeUpdate();
+            stmt.executeUpdate();
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            long newId = (long) generatedKeys.getLong( 1 );
             stmt.close();
-            Entry e = new Entry(id, sum, type, desc);
+            Entry e = new Entry(newId, sum, type, desc);
             this.entries.add(e);
             return e;
         } catch (SQLException e) {
@@ -66,9 +68,11 @@ public class SQLiteEntryDao implements EntryDao {
         stmt.setInt(2, type.getId());
         stmt.setString(3, desc);
         stmt.setLong(4, p.getId());
-        long id = stmt.executeUpdate();
+        stmt.executeUpdate();
+        ResultSet generatedKeys = stmt.getGeneratedKeys();
+        long newId = (long) generatedKeys.getLong( 1 );
         stmt.close();
-        Entry e = new Entry(id, sum, type, desc, p.getId());
+        Entry e = new Entry(newId, sum, type, desc, p.getId());
         this.entries.add(e);
         return e;
     }

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.sqlite.SQLiteConfig;
 
 /**
  *
@@ -19,7 +20,9 @@ public class SQLiteDatabase {
 
     public SQLiteDatabase(String name) {
         try {
-            this.connection = DriverManager.getConnection("jdbc:sqlite:" + name);
+            SQLiteConfig config = new SQLiteConfig();  
+            config.enforceForeignKeys(true);  
+            this.connection = DriverManager.getConnection("jdbc:sqlite:" + name, config.toProperties());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

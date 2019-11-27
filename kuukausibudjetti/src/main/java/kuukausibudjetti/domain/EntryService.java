@@ -46,6 +46,18 @@ public class EntryService {
                 .collect(Collectors.toList());
     }
     
+    public List<Entry> getAllIncomes() {
+        return this.entryDao.getAll()
+                .stream().filter(entry -> entry.getType() == EntryType.INCOME)
+                .collect(Collectors.toList());
+    }
+    
+    public List<Entry> getAllExpenditures() {
+        return this.entryDao.getAll()
+                .stream().filter(entry -> entry.getType() == EntryType.EXPENDITURE)
+                .collect(Collectors.toList());
+    }
+    
     public List<Entry> getAllEntriesForPerson(Person p) {
         return this.entryDao.getAll()
                 .stream().filter(entry -> entry.getPersonId() == p.getId())
@@ -66,5 +78,14 @@ public class EntryService {
     
     public boolean removeEntry(long id) {
         return this.entryDao.delete(id);
+    }
+    
+    public boolean refetchEntries() {
+        try {
+            this.entryDao.fetchAll();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 }
