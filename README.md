@@ -2,11 +2,13 @@
 Tämä repositorio sisältää harjoitustyön ja _laskarit_ kurssille **Ohjelmistotekniikka**
 
 ## Dokumentaatio
-[Vaatimusmäärittely](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
+[Käyttöohje](./dokumentaatio/kayttoohje.md)
 
-[Arkkitehtuurikuvaus](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+[Vaatimusmäärittely](./dokumentaatio/vaatimusmaarittely.md)
 
-[Työaikakirjanpito](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
+[Arkkitehtuurikuvaus](./dokumentaatio/arkkitehtuuri.md)
+
+[Työaikakirjanpito](./dokumentaatio/tyoaikakirjanpito.md)
 
 ## Releaset
 [Viikko 5](https://github.com/Jamb000h/ot-harjoitustyo/releases/tag/viikko5)

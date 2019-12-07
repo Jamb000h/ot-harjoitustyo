@@ -24,4 +24,4 @@ Sovelluksen tarkoituksena on tarjota sen käyttäjälle mahdollisuus luoda kuuka
   - Sijoituslaskuri
 
 ## Käyttöliittymäluonnos
-![Käyttöliittymäluonnos](https://github.com/Jamb000h/ot-harjoitustyo/blob/master/dokumentaatio/kayttoliittymaluonnos.jpg "Käyttöliittymäluonnos")
+![Käyttöliittymäluonnos](./kayttoliittymaluonnos.jpg "Käyttöliittymäluonnos")
