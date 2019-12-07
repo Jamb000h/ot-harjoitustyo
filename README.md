@@ -8,6 +8,8 @@ Tämä repositorio sisältää harjoitustyön ja _laskarit_ kurssille **Ohjelmis
 
 [Arkkitehtuurikuvaus](./dokumentaatio/arkkitehtuuri.md)
 
+[Testausdokumentti](./dokumentaatio/testausdokumentti.md)
+
 [Työaikakirjanpito](./dokumentaatio/tyoaikakirjanpito.md)
 
 ## Releaset
