@@ -34,6 +34,12 @@ public class SQLitePersonDao implements PersonDao {
         }
     }
 
+    /**
+     * Save a new person to database and return it
+     * @param name name of person to create
+     * @return created person
+     * @throws SQLException SQL exception if failure
+     */
     @Override
     public Person create(String name) throws SQLException {
         try {
@@ -50,11 +56,20 @@ public class SQLitePersonDao implements PersonDao {
         }
     }
 
+    /**
+     * Get all persons
+     * @return list of all persons
+     */
     @Override
     public List<Person> getAll() {
         return this.persons;
     }
 
+    /**
+     * Delete a person
+     * @param id id of person to remove
+     * @return true if deletion successful, otherwise false
+     */
     @Override
     public Boolean delete(long id) {
         try {
@@ -70,6 +85,11 @@ public class SQLitePersonDao implements PersonDao {
         }
     }
 
+    /**
+     * Fetch all persons from database and return them
+     * @return a list of all persons from database
+     * @throws SQLException SQL exception if failure
+     */
     @Override
     public List<Person> fetchAll() throws SQLException {
         ArrayList<Person> personList = new ArrayList<>();

@@ -18,6 +18,10 @@ public enum EntryType {
         this.id = id;
     }
 
+    /**
+     * get id of given EntryType
+     * @return id of given EntryType enum
+     */
     public int getId() {
         return this.id;
     }

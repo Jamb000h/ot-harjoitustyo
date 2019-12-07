@@ -36,6 +36,14 @@ public class SQLiteEntryDao implements EntryDao {
         }
     }
 
+    /**
+     * Save new entry to database and return it
+     * @param sum sum of entry as euros without decimals
+     * @param type type of entry as EntryType enum
+     * @param desc description text for entry
+     * @return Newly created entry
+     * @throws SQLException SQL exception if failure
+     */
     @Override
     public Entry create(Integer sum, EntryType type, String desc) throws SQLException {
         try {
@@ -56,6 +64,15 @@ public class SQLiteEntryDao implements EntryDao {
         }
     }
 
+    /**
+     * Save new entry linked to person to database and return it
+     * @param sum sum of entry as euros without decimals
+     * @param type type of entry as EntryType enum
+     * @param desc description text for entry
+     * @param p person to link the entry to
+     * @return Newly created entry
+     * @throws SQLException SQL exception if failure
+     */
     @Override
     public Entry createForPerson(Integer sum, EntryType type, String desc, Person p) throws SQLException {
         Connection connection = this.db.getConnection();
@@ -77,6 +94,11 @@ public class SQLiteEntryDao implements EntryDao {
         return e;
     }
 
+    /**
+     * Delete an entry
+     * @param id id of entry to delete
+     * @return true if deletion successful, otherwise false
+     */
     @Override
     public Boolean delete(long id) {
         try {
@@ -92,11 +114,20 @@ public class SQLiteEntryDao implements EntryDao {
         }
     }
 
+    /**
+     * Get all entires
+     * @return list of all entries
+     */
     @Override
     public List<Entry> getAll() {
         return this.entries;
     }
     
+    /**
+     * Refetch all entries from database and return them
+     * @return a list of all entries in database
+     * @throws SQLException SQL exception if failure
+     */
     public List<Entry> fetchAll() throws SQLException {
         ArrayList<Entry> entryList = new ArrayList<>();
         Connection connection = this.db.getConnection();

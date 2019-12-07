@@ -22,6 +22,11 @@ public class PersonService {
         this.personDao = personDao;
     }
     
+    /**
+     * Add a new person to database
+     * @param name name of the new person
+     * @return true if person was successfully added, otherwise false
+     */
     public boolean addPerson(String name) {
         try {
             Person newPerson = this.personDao.create(name);
@@ -31,10 +36,18 @@ public class PersonService {
         }
     }
     
+    /**
+     * Get all persons
+     * @return list of all persons
+     */
     public List<Person> getPersons() {
         return this.personDao.getAll();
     }
     
+    /**
+     * Refetch all persons from database and return them
+     * @return list of all persons, updated from database
+     */
     public List<Person> refetchPersons() {
         List<Person> persons;
         try {
@@ -47,6 +60,11 @@ public class PersonService {
         return persons;
     }
     
+    /**
+     * Remove person and all related entries from database
+     * @param id id of person to remove
+     * @return true if deletion successful, otherwise false
+     */
     public boolean removePerson(long id) {
         return this.personDao.delete(id);
     }
