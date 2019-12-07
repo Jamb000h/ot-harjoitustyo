@@ -9,7 +9,7 @@ Sovelluksen tarkoituksena on tarjota sen käyttäjälle mahdollisuus luoda kuuka
 - TEHTY Tulojen lisääminen/poistaminen budjettiin yleisesti
 - TEHTY Menojen lisääminen/poistaminen budjettiin yleisesti
 - TEHTY Kaikkien tulojen ja menojen erotuksen laskeminen
-- Henkilöiden omien tulojen ja menojen erotuksen laskeminen
+- TEHTY Henkilöiden omien tulojen ja menojen erotuksen laskeminen
 
 ## Jatkokehitysideoita
 - Käyttäjät ja käyttäjätilit autentikaatiolla
