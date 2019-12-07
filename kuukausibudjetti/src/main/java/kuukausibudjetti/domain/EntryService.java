@@ -46,6 +46,18 @@ public class EntryService {
                 .collect(Collectors.toList());
     }
     
+    public List<Entry> getAllCommonIncomes() {
+        return this.entryDao.getAll()
+                .stream().filter(entry -> entry.getPersonId() == -1 && entry.getType() == EntryType.INCOME)
+                .collect(Collectors.toList());
+    }
+    
+    public List<Entry> getAllCommonExpenditures() {
+        return this.entryDao.getAll()
+                .stream().filter(entry -> entry.getPersonId() == -1 && entry.getType() == EntryType.EXPENDITURE)
+                .collect(Collectors.toList());
+    }
+    
     public List<Entry> getAllIncomes() {
         return this.entryDao.getAll()
                 .stream().filter(entry -> entry.getType() == EntryType.INCOME)
@@ -61,6 +73,18 @@ public class EntryService {
     public List<Entry> getAllEntriesForPerson(Person p) {
         return this.entryDao.getAll()
                 .stream().filter(entry -> entry.getPersonId() == p.getId())
+                .collect(Collectors.toList());
+    }
+    
+    public List<Entry> getAllIncomesForPerson(Person p) {
+        return this.entryDao.getAll()
+                .stream().filter(entry -> entry.getPersonId() == p.getId() && entry.getType() == EntryType.INCOME)
+                .collect(Collectors.toList());
+    }
+    
+    public List<Entry> getAllExpendituresForPerson(Person p) {
+        return this.entryDao.getAll()
+                .stream().filter(entry -> entry.getPersonId() == p.getId() && entry.getType() == EntryType.EXPENDITURE)
                 .collect(Collectors.toList());
     }
     
