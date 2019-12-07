@@ -26,4 +26,5 @@
 | 7.12 | 1    | Henkilöiden tulojen ja menojen erotus |
 |  | 1    | Lisää testejä |
 |  | 1    | UI:n parantely |
-| yht   | 27   | | 
+|  | 4    | Käyttöohje, arkkitehtuurikuvaus, dokumentaation parantelu |
+| yht   | 31   | | 

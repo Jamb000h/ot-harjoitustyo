@@ -11,6 +11,8 @@ Tämä repositorio sisältää harjoitustyön ja _laskarit_ kurssille **Ohjelmis
 ## Releaset
 [Viikko 5](https://github.com/Jamb000h/ot-harjoitustyo/releases/tag/viikko5)
 
+[Viikko 6 (final)](https://github.com/Jamb000h/ot-harjoitustyo/releases/tag/viikko6)
+
 ## Ohjelmiston käynnistys
 Aja komento
 ```mvn compile exec:java -Dexec.mainClass=kuukausibudjetti.ui.BudgetUI```
@@ -36,6 +38,10 @@ Tämän jälkeen jar-tiedoston voi suorittaa komennolla
 ### Koodin laadullinen raportti
 Aja komento
 ```mvn jxr:jxr checkstyle:checkstyle```
+kansiossa ```/kuukausibudjetti```
+### Javadoc-dokumentaation generointi
+Aja komento
+```mvn javadoc:javadoc```
 kansiossa ```/kuukausibudjetti```
 
 
