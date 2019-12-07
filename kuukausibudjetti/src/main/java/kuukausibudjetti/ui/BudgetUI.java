@@ -295,6 +295,9 @@ public class BudgetUI extends Application {
         Button addPersonButton = createButton("Lisää henkilö");
         addPersonButton.setOnAction(e -> {
             String name = addPersonInput.getText();
+            if(name.isEmpty()) {
+                return;
+            }
             this.personService.addPerson(name);
             addPersonInput.setText("");
             refreshPersonList();
@@ -321,6 +324,9 @@ public class BudgetUI extends Application {
         Button addEntryButton = createButton("Lisää");
 
         addEntryButton.setOnAction(e -> {
+            if(addEntryDesc.getText().isEmpty()) {
+                return;
+            }
             Integer sum = 0;
             try {
                 sum = Integer.parseInt(addEntrySum.getText());
