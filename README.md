@@ -1,4 +1,4 @@
-# Ohjelmistotekniikka Harjoitustyö
+# Kuukausibudjetti
 Tämä repositorio sisältää harjoitustyön ja _laskarit_ kurssille **Ohjelmistotekniikka**
 
 ## Dokumentaatio
