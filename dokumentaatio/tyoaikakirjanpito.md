@@ -23,4 +23,7 @@
 |  | 1    | Lisää testejä |
 |  | 1    | Dokumentaatio, paketointi, release |
 |  | 0.5    | sekvenssikaavio |
-| yht   | 24   | | 
+| 7.12 | 1    | Henkilöiden tulojen ja menojen erotus |
+|  | 1    | Lisää testejä |
+|  | 1    | UI:n parantely |
+| yht   | 27   | | 
