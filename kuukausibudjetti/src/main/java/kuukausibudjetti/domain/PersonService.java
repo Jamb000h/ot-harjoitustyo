@@ -29,7 +29,7 @@ public class PersonService {
      */
     public boolean addPerson(String name) {
         try {
-            Person newPerson = this.personDao.create(name);
+            this.personDao.create(name);
             return true;
         } catch (SQLException e) {
             return false;

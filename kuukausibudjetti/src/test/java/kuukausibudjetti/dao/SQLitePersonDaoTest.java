@@ -47,7 +47,7 @@ public class SQLitePersonDaoTest {
     public void personsDeletedProperly() {
         int startSize = this.dao.getAll().size();
         try {
-            Person p = this.dao.create("Jonne");
+            this.dao.create("Jonne");
             assertTrue(this.dao.getAll().size() == startSize + 1);
             assertEquals("Jonne", this.dao.getAll().get(this.dao.getAll().size() - 1).getName());
             

@@ -5,7 +5,6 @@
  */
 package kuukausibudjetti.dao;
 
-import java.sql.SQLException;
 import kuukausibudjetti.db.SQLiteDatabase;
 import kuukausibudjetti.domain.Entry;
 import kuukausibudjetti.domain.EntryType;
@@ -56,6 +55,20 @@ public class SQLiteEntryDaoTest {
             assertTrue(this.dao.getAll().size() == startSize + 1);
             assertEquals("Whoa I am an entry", this.dao.getAll().get(this.dao.getAll().size() - 1).getDesc());
             assertEquals(p.getId(), e.getPersonId());
+        } catch (Exception e) {
+            
+        }
+    }
+    
+    @Test
+    public void entryDeletedProperly() {
+        int startSize = this.dao.getAll().size();
+        try {
+            Person p = this.personDao.create("Jonne");
+            Entry e = this.dao.createForPerson(500, EntryType.INCOME, "Whoa I am an entry", p);
+            assertTrue(this.dao.getAll().size() == startSize + 1);
+            this.dao.delete(e.getId());
+            assertTrue(this.dao.getAll().size() == startSize);
         } catch (Exception e) {
             
         }

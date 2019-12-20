@@ -5,8 +5,6 @@
  */
 package kuukausibudjetti.domain;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Jonne

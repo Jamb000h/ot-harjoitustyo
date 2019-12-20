@@ -6,7 +6,6 @@
 package kuukausibudjetti.domain;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import kuukausibudjetti.dao.EntryDao;
@@ -31,7 +30,7 @@ public class EntryService {
      */
     public boolean addEntry(Integer sum, EntryType type, String desc) {
         try {
-            Entry newEntry = this.entryDao.create(sum, type, desc);
+            this.entryDao.create(sum, type, desc);
             return true;
         } catch (SQLException e) {
             return false;
